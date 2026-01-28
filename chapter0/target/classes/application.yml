@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: chapter0-prerequisites
+  ai:
+    model:
+      chat: bedrock-converse
+    bedrock:
+      aws:
+        region: ${AWS_REGION:eu-central-1}
+      converse:
+        chat:
+          options:
+            model: eu.anthropic.claude-haiku-4-5-20251001-v1:0
+            temperature: 0.7
+            max-tokens: 1000
+
+server:
+  port: 8080
+
+logging:
+  level:
+    root: INFO
+    com.workshop.chapter0: INFO
