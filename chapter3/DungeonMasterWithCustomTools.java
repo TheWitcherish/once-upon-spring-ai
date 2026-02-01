@@ -10,7 +10,7 @@ import software.amazon.awssdk.services.bedrockruntime.BedrockRuntimeClient;
 
 import java.util.Random;
 
-private static final Logger log = LoggerFactory.getLogger("DungeonMaster");
+DungeonMasterWithCustomToolsogger log = LoggerFactory.getLogger("DungeonMaster");
 private static final Random random = new Random();
 
 // Record for dice roll input

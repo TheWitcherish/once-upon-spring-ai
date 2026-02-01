@@ -9,10 +9,6 @@ out/
 *.iml
 *.ipr
 *.iws
-.vscode/
-.kiro/
-.claude/
-.omc/
 *.code-workspace
 .settings/
 .classpath
@@ -20,6 +16,19 @@ out/
 .factorypath
 *.swp
 *~
+
+# IDE/tools
+.claude/
+.omc/
+CLAUDE.md
+AGENTS.md
+.claudeignore
+.mcp.json
+.mcp/
+.vscode/
+.kiro/
+.cursor/
+.windsurf/
 
 # Maven
 pom.xml.tag

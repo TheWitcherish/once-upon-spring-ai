@@ -1,4 +1,4 @@
-# Chapter 2: The Adventurer's Arsenal
+# Chapter 3: The Adventurer's Arsenal
 
 ## Equipping Your AI with Tools
 
@@ -53,7 +53,7 @@ Same as Chapter 1:
 ### Step 2: Run Your Program
 
 ```bash
-java --class-path "target/dependency/*" DungeonMasterWithTools.java 2>&1 | grep -v "^WARNING:"
+java --class-path "target/dependency/*" DungeonMasterWithCustomTools.java 2>&1 | grep -v "^WARNING:"
 ```
 
 ### Step 3: Watch the Magic Happen!
@@ -82,7 +82,7 @@ Notice the `TOOL CALLED` line - that's your tool being invoked by the AI!
 
 ## Understanding the Code
 
-Let's break down the new magical elements in `DungeonMasterWithTools.java`.
+Let's break down the new magical elements in `DungeonMasterWithCustomTools.java`.
 
 ### 1. Defining Tool Input/Output with Records
 

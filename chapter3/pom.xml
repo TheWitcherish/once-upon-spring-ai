@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.amazonaws</groupId>
-    <artifactId>chapter2-agent-with-tools</artifactId>
+    <artifactId>chapter3-agent-with-custom-tool</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <name>Chapter 2 - AI Agent with Built-in Tools</name>
+    <name>Chapter 3 - AI Agent with Custom Tool</name>
 
     <properties>
         <java.version>25</java.version>
