@@ -1,7 +1,0 @@
-/Users/arnajean/Documents/TheWitcherish/once-upon-spring-ai/chapter0/src/main/java/com/workshop/chapter0/Chapter0Application.java
-/Users/arnajean/Documents/TheWitcherish/once-upon-spring-ai/chapter0/src/main/java/com/workshop/chapter0/config/BedrockChatConfig.java
-/Users/arnajean/Documents/TheWitcherish/once-upon-spring-ai/chapter0/src/main/java/com/workshop/chapter0/config/BedrockConfigProperties.java
-/Users/arnajean/Documents/TheWitcherish/once-upon-spring-ai/chapter0/src/main/java/com/workshop/chapter0/controller/Chapter0Controller.java
-/Users/arnajean/Documents/TheWitcherish/once-upon-spring-ai/chapter0/src/main/java/com/workshop/chapter0/model/BedrockHealthResponse.java
-/Users/arnajean/Documents/TheWitcherish/once-upon-spring-ai/chapter0/src/main/java/com/workshop/chapter0/model/HealthResponse.java
-/Users/arnajean/Documents/TheWitcherish/once-upon-spring-ai/chapter0/src/main/java/com/workshop/chapter0/service/BedrockHealthService.java
