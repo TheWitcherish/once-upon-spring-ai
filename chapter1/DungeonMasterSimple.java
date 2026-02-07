@@ -14,29 +14,29 @@ void main() {
 
     // Step 1: Create AWS Bedrock Runtime Client
     var bedrockClient = BedrockRuntimeClient.builder()
-            .region(Region.EU_CENTRAL_1)
-            .credentialsProvider(DefaultCredentialsProvider.builder().build())
-            .build();
+        .region(Region.EU_CENTRAL_1)
+        .credentialsProvider(DefaultCredentialsProvider.builder().build())
+        .build();
 
     // Step 2: Configure model options (which Claude model to use)
-    var modelId = "eu.anthropic.claude-haiku-4-5-20251001-v1:0";
+    var modelId = "us.anthropic.claude-haiku-4-5-20251001-v1:0";
     var options = BedrockChatOptions.builder()
-            .model(modelId)
-            .build();
+        .model(modelId)
+        .build();
 
     // Step 3: Create Spring AI ChatModel (wraps Bedrock client)
     var chatModel = BedrockProxyChatModel.builder()
-            .bedrockRuntimeClient(bedrockClient)
-            .defaultOptions(options)
-            .build();
+        .bedrockRuntimeClient(bedrockClient)
+        .defaultOptions(options)
+        .build();
 
     // Step 4: Build ChatClient with system prompt (defines AI personality)
     var dungeonMaster = ChatClient.builder(chatModel)
-            .defaultSystem("""
-                    You are a Dungeon Master for a Dungeons & Dragons game.
-                    Create exciting fantasy adventures with vivid details.
-                    """)
-            .build();
+        .defaultSystem("""
+            You are a Dungeon Master for a Dungeons & Dragons game.
+            Create exciting fantasy adventures with vivid details.
+            """)
+        .build();
 
     // Step 5: Invoke the AI agent
     var playerMessage = "Hi, I am an adventurer ready for adventure!";
@@ -44,10 +44,10 @@ void main() {
 
     try {
         var response = dungeonMaster
-                .prompt()
-                .user(playerMessage)
-                .call()
-                .content();
+            .prompt()
+            .user(playerMessage)
+            .call()
+            .content();
 
         log.info("Dungeon Master says:");
         log.info(response);

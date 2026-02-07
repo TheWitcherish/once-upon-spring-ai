@@ -91,6 +91,3 @@ surefire-reports/
 *.tmp
 *.temp
 *.bak
-
-# Documentation build
-aidlc-docs/
