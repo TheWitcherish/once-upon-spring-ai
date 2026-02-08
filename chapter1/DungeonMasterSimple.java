@@ -2,12 +2,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.bedrock.converse.BedrockProxyChatModel;
 import org.springframework.ai.bedrock.converse.BedrockChatOptions;
-import org.springframework.ai.chat.client.ChatClient;
 import software.amazon.awssdk.auth.credentials.DefaultCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.bedrockruntime.BedrockRuntimeClient;
 
-private static final Logger log = LoggerFactory.getLogger("DungeonMaster");
+import org.springframework.ai.chat.client.ChatClient;
+
+private static final Logger log = LoggerFactory.getLogger("DungeonMasterSimple");
 
 void main() {
     log.info("=== Starting Dungeon Master AI Agent ===");
@@ -19,7 +20,7 @@ void main() {
         .build();
 
     // Step 2: Configure model options (which Claude model to use)
-    var modelId = "us.anthropic.claude-haiku-4-5-20251001-v1:0";
+    var modelId = "global.anthropic.claude-haiku-4-5-20251001-v1:0";
     var options = BedrockChatOptions.builder()
         .model(modelId)
         .build();
@@ -31,7 +32,7 @@ void main() {
         .build();
 
     // Step 4: Build ChatClient with system prompt (defines AI personality)
-    var dungeonMaster = ChatClient.builder(chatModel)
+    var agent = ChatClient.builder(chatModel)
         .defaultSystem("""
             You are a Dungeon Master for a Dungeons & Dragons game.
             Create exciting fantasy adventures with vivid details.
@@ -43,7 +44,7 @@ void main() {
     log.info("Player: " + playerMessage + "\n");
 
     try {
-        var response = dungeonMaster
+        var response = agent
             .prompt()
             .user(playerMessage)
             .call()

@@ -1,7 +1,7 @@
 # Build output
-target/
-build/
-out/
+*target/
+*build/
+*out/
 *.class
 
 # IDE
@@ -21,7 +21,6 @@ out/
 .claude/
 .omc/
 CLAUDE.md
-AGENTS.md
 .claudeignore
 .mcp.json
 .mcp/

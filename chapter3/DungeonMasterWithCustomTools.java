@@ -3,7 +3,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.ai.bedrock.converse.BedrockProxyChatModel;
 import org.springframework.ai.bedrock.converse.BedrockChatOptions;
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.tool.annotation.Tool;
 import software.amazon.awssdk.auth.credentials.DefaultCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.bedrockruntime.BedrockRuntimeClient;
@@ -11,34 +10,31 @@ import software.amazon.awssdk.services.bedrockruntime.BedrockRuntimeClient;
 import java.util.Arrays;
 import java.util.Random;
 
-private static final Logger log = LoggerFactory.getLogger("DungeonMaster");
+import org.springframework.ai.tool.annotation.Tool;
+import org.springframework.ai.tool.annotation.ToolParam;
+
+private static final Logger log = LoggerFactory.getLogger("DungeonMasterWithCustomTools");
 private static final Random random = new Random();
 
 // Tool class containing methods the AI can call
 class DiceTools {
 
-    // Record for dice roll input
-    record DiceRollRequest(int numberOfDice, int sides) {}
-
     // Record for dice roll output
     record DiceRollResponse(int[] rolls, int total, String description) {}
 
     @Tool(description = "Roll dice for D&D game mechanics. Use this for attack rolls, damage, ability checks, or saving throws.")
-    DiceRollResponse rollDice(DiceRollRequest request) {
-        var rolls = new int[request.numberOfDice()];
+    DiceRollResponse rollDice(
+        @ToolParam(description = "Number of faces on the dice (e.g. 6, 20)", required = true) int faces,
+        @ToolParam(description = "Number of dice to roll (e.g. 1, 3)", required = true) int count) {
+        var rolls = new int[count];
         var total = 0;
 
-        for (int i = 0; i < request.numberOfDice(); i++) {
-            rolls[i] = random.nextInt(request.sides()) + 1;
+        for (int i = 0; i < count; i++) {
+            rolls[i] = random.nextInt(faces) + 1;
             total += rolls[i];
         }
 
-        var description = "Rolled %dd%d: %s = %d".formatted(
-            request.numberOfDice(),
-            request.sides(),
-            Arrays.toString(rolls),
-            total
-        );
+        var description = "Rolled %dd%d: %s = %d".formatted(count, faces, Arrays.toString(rolls), total);
 
         log.info("TOOL CALLED: {}", description);
 
@@ -56,7 +52,7 @@ void main() {
         .build();
 
     // Step 2: Configure model options
-    var modelId = "us.anthropic.claude-haiku-4-5-20251001-v1:0";
+    var modelId = "global.anthropic.claude-haiku-4-5-20251001-v1:0";
     var options = BedrockChatOptions.builder()
         .model(modelId)
         .build();
