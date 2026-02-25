@@ -39,6 +39,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Value;
 
 import software.amazon.awssdk.auth.credentials.DefaultCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
@@ -70,8 +71,8 @@ public class RulesAgent {
     }
 
     @Bean
-    AgentCard agentCard(@org.springframework.beans.factory.annotation.Value("${server.port:8000}") int port,
-                        @org.springframework.beans.factory.annotation.Value("${server.servlet.context-path:/a2a}") String contextPath) {
+    AgentCard agentCard(@Value("${server.port:8000}") int port,
+                        @Value("${server.servlet.context-path:/a2a}") String contextPath) {
         return new AgentCard.Builder()
                 .name("Rules Agent")
                 .description("""
@@ -114,7 +115,7 @@ public class RulesAgent {
 class VectorStoreConfig {
 
     private static final Logger log = LoggerFactory.getLogger("VectorStoreConfig");
-    private static final String VECTOR_STORE_FILE = "utils/dm_knowledge_base.json";
+    private static final String VECTOR_STORE_FILE = "./../../utils/dm_knowledge_base.json";
 
     @Bean
     BedrockTitanEmbeddingModel embeddingModel() {
@@ -160,15 +161,5 @@ class RulesAgentConfig {
                 .bedrockRuntimeClient(bedrockClient)
                 .defaultOptions(options)
                 .build();
-    }
-}
-
-/// Health check endpoint
-@RestController
-class RulesAgentController {
-
-    @GetMapping("/health")
-    Map<String, String> health() {
-        return Map.of("status", "healthy", "agent", "rules-agent");
     }
 }

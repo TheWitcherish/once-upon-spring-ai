@@ -25,14 +25,15 @@ class RulesTools {
         log.info("Tool called: queryDndRules('{}')", query);
 
         var results = vectorStore.similaritySearch(
-                SearchRequest.builder().query(query).topK(1).build());
+                SearchRequest.builder().query(query).topK(3).build());
 
         if (results.isEmpty()) return "No rules found for that query.";
 
-        var doc = results.getFirst();
-        var page = doc.getMetadata().getOrDefault("page", "?");
-        var text = doc.getText();
-        var snippet = text.length() > 200 ? text.substring(0, 200) + "..." : text;
-        return "Page %s: %s".formatted(page, snippet);
+        var sb = new StringBuilder();
+        for (var doc : results) {
+            var page = doc.getMetadata().getOrDefault("page", "?");
+            sb.append("[Page %s] %s\n\n".formatted(page, doc.getText()));
+        }
+        return sb.toString().strip();
     }
 }
