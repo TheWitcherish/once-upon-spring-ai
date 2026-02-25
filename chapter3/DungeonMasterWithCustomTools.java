@@ -1,3 +1,15 @@
+///usr/bin/env jbang "$0" "$@" ; exit $?
+
+//JAVA 25+
+//SOURCES DiceTools.java
+//REPOS mavencentral,spring-milestones=https://repo.spring.io/milestone
+//DEPS org.springframework.ai:spring-ai-bedrock-converse:2.0.0-M2
+//DEPS org.springframework.ai:spring-ai-client-chat:2.0.0-M2
+//DEPS software.amazon.awssdk:bedrockruntime:2.41.34
+//DEPS software.amazon.awssdk:auth:2.41.34
+//DEPS org.slf4j:slf4j-api:2.0.17
+//DEPS org.slf4j:slf4j-simple:2.0.17
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.bedrock.converse.BedrockProxyChatModel;
@@ -7,43 +19,10 @@ import software.amazon.awssdk.auth.credentials.DefaultCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.bedrockruntime.BedrockRuntimeClient;
 
-import java.util.Arrays;
-import java.util.Random;
-
-import org.springframework.ai.tool.annotation.Tool;
-import org.springframework.ai.tool.annotation.ToolParam;
-
 private static final Logger log = LoggerFactory.getLogger("DungeonMasterWithCustomTools");
-private static final Random random = new Random();
-
-// Tool class containing methods the AI can call
-class DiceTools {
-
-    // Record for dice roll output
-    record DiceRollResponse(int[] rolls, int total, String description) {}
-
-    @Tool(description = "Roll dice for D&D game mechanics. Use this for attack rolls, damage, ability checks, or saving throws.")
-    DiceRollResponse rollDice(
-        @ToolParam(description = "Number of faces on the dice (e.g. 6, 20)", required = true) int faces,
-        @ToolParam(description = "Number of dice to roll (e.g. 1, 3)", required = true) int count) {
-        var rolls = new int[count];
-        var total = 0;
-
-        for (int i = 0; i < count; i++) {
-            rolls[i] = random.nextInt(faces) + 1;
-            total += rolls[i];
-        }
-
-        var description = "Rolled %dd%d: %s = %d".formatted(count, faces, Arrays.toString(rolls), total);
-
-        log.info("TOOL CALLED: {}", description);
-
-        return new DiceRollResponse(rolls, total, description);
-    }
-}
 
 void main() {
-    log.info("=== Starting Dungeon Master AI Agent with Tools ===");
+    log.info("=== Starting Dungeon Master AI Agent with Custom Tools ===");
 
     // Step 1: Create AWS Bedrock Runtime Client
     var bedrockClient = BedrockRuntimeClient.builder()
@@ -52,7 +31,7 @@ void main() {
         .build();
 
     // Step 2: Configure model options
-    var modelId = "global.anthropic.claude-haiku-4-5-20251001-v1:0";
+    var modelId = "eu.anthropic.claude-haiku-4-5-20251001-v1:0";
     var options = BedrockChatOptions.builder()
         .model(modelId)
         .build();
@@ -63,29 +42,24 @@ void main() {
         .defaultOptions(options)
         .build();
 
-    // Step 4: Build ChatClient with system prompt AND the tools
-    var dungeonMaster = ChatClient.builder(chatModel)
+    // Step 4: Build ChatClient with system prompt AND the custom dice tools
+    var agent = ChatClient.builder(chatModel)
         .defaultSystem("""
-            You are a Dungeon Master for a Dungeons & Dragons game.
-            Create exciting fantasy adventures with vivid details.
-
-            IMPORTANT RULES:
-            - When the player attacks, IMMEDIATELY use the rollDice tool to roll 1d20.
-            - Do NOT ask for stats or AC - assume standard values (AC 13 for goblins).
-            - A roll of 13+ is a hit. On a hit, roll damage dice too.
-            - ALWAYS use the tool first, then narrate based on the result.
-            - Be dramatic and descriptive when narrating combat!
+            You are Lady Luck, the mystical keeper of dice and fortune in D&D adventures.
+            You speak with theatrical flair and always announce dice rolls with appropriate drama.
+            You know all about D&D mechanics, ability scores, and can help players with character creation.
+            When rolling ability scores, remember the traditional method: roll 4d6, drop the lowest die.
             """)
-        .defaultTools(new DiceTools())
         .build();
 
     // Step 5: Invoke the AI agent with a request that requires dice rolling
-    var playerMessage = "I want to attack the goblin with my sword! What happens?";
+    var playerMessage = "Help me create a new D&D character! Roll the strength, wisdom, charisma and intelligence abilities scores using 4d6 drop lowest method.";
     log.info("Player: {}\n", playerMessage);
 
     try {
-        var response = dungeonMaster.prompt()
+        var response = agent.prompt()
             .user(playerMessage)
+            .tools(new DiceTools())
             .call()
             .content();
 
@@ -93,7 +67,7 @@ void main() {
         log.info(response);
     } catch (Exception e) {
         log.error("Error invoking AI agent: {}", e.getMessage());
+    } finally {
+        log.info("\n=== Ending Dungeon Master AI Agent with Custom Tools ===");
     }
-
-    log.info("\n=== Ending Dungeon Master AI Agent ===");
 }

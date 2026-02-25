@@ -1,3 +1,14 @@
+///usr/bin/env jbang "$0" "$@" ; exit $?
+
+//JAVA 25+
+//REPOS mavencentral,spring-milestones=https://repo.spring.io/milestone
+//DEPS org.springframework.ai:spring-ai-bedrock-converse:2.0.0-M2
+//DEPS org.springframework.ai:spring-ai-client-chat:2.0.0-M2
+//DEPS software.amazon.awssdk:bedrockruntime:2.41.34
+//DEPS software.amazon.awssdk:auth:2.41.34
+//DEPS org.slf4j:slf4j-api:2.0.17
+//DEPS org.slf4j:slf4j-simple:2.0.17
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.bedrock.converse.BedrockProxyChatModel;
@@ -12,7 +23,7 @@ private static final Logger log = LoggerFactory.getLogger("DungeonMasterSimple")
 
 void main() {
     log.info("=== Starting Dungeon Master AI Agent ===");
-
+    
     // Step 1: Create AWS Bedrock Runtime Client
     var bedrockClient = BedrockRuntimeClient.builder()
         .region(Region.EU_CENTRAL_1)
@@ -20,7 +31,7 @@ void main() {
         .build();
 
     // Step 2: Configure model options (which Claude model to use)
-    var modelId = "global.anthropic.claude-haiku-4-5-20251001-v1:0";
+    var modelId = "eu.anthropic.claude-haiku-4-5-20251001-v1:0";
     var options = BedrockChatOptions.builder()
         .model(modelId)
         .build();
@@ -33,10 +44,7 @@ void main() {
 
     // Step 4: Build ChatClient with system prompt (defines AI personality)
     var agent = ChatClient.builder(chatModel)
-        .defaultSystem("""
-            You are a Dungeon Master for a Dungeons & Dragons game.
-            Create exciting fantasy adventures with vivid details.
-            """)
+        .defaultSystem("You are a game master for a Dungeon & Dragon game")
         .build();
 
     // Step 5: Invoke the AI agent
@@ -55,7 +63,7 @@ void main() {
 
     } catch (Exception e) {
         log.error("Error invoking AI agent: {}", e.getMessage());
+    } finally {
+        log.info("\n=== Ending Dungeon Master AI Agent ===");
     }
-
-    log.info("\n=== Ending Dungeon Master AI Agent ===");
 }

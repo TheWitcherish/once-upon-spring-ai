@@ -1,3 +1,15 @@
+///usr/bin/env jbang "$0" "$@" ; exit $?
+
+//JAVA 25+
+//REPOS mavencentral,spring-milestones=https://repo.spring.io/milestone
+//DEPS org.springframework.ai:spring-ai-bedrock-converse:2.0.0-M2
+//DEPS org.springframework.ai:spring-ai-client-chat:2.0.0-M2
+//DEPS org.springaicommunity:spring-ai-agent-utils:0.4.2
+//DEPS software.amazon.awssdk:bedrockruntime:2.41.34
+//DEPS software.amazon.awssdk:auth:2.41.34
+//DEPS org.slf4j:slf4j-api:2.0.17
+//DEPS org.slf4j:slf4j-simple:2.0.17
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.bedrock.converse.BedrockProxyChatModel;
@@ -12,8 +24,8 @@ import org.springaicommunity.agent.tools.SmartWebFetchTool;
 private static final Logger log = LoggerFactory.getLogger("DungeonMasterWithBuiltInTools");
 
 void main() {
-    log.info("=== Starting AI Agent with Built-in Tools ===");
-
+    log.info("=== Starting Dungeon Master AI Agent with Built-in Tools ===");
+    
     // Step 1: Create AWS Bedrock Runtime Client
     var bedrockClient = BedrockRuntimeClient.builder()
         .region(Region.EU_CENTRAL_1)
@@ -21,39 +33,28 @@ void main() {
         .build();
 
     // Step 2: Configure model options
-    var modelId = "global.anthropic.claude-haiku-4-5-20251001-v1:0";
+    var modelId = "eu.anthropic.claude-haiku-4-5-20251001-v1:0";
     var options = BedrockChatOptions.builder()
         .model(modelId)
         .build();
 
-    // Step 3: Create Spring AI ChatModel
+    // Step 3: Create Spring AI ChatModel and its associated AI Agent
     var chatModel = BedrockProxyChatModel.builder()
         .bedrockRuntimeClient(bedrockClient)
         .defaultOptions(options)
         .build();
+    var agent = ChatClient.builder(chatModel).build();
 
-    // Step 4: Create SmartWebFetchTool tool with its own ChatClient to capture the relevant content
-    var summarizationClient = ChatClient.builder(chatModel).build();
-    var webFetchTool = SmartWebFetchTool.builder(summarizationClient)
+    // Step 4: Create SmartWebFetchTool tool to enable the AI agent to fetch / process web content
+    var webFetchTool = SmartWebFetchTool.builder(agent)
         .maxContentLength(300_000)
         .build();
 
-    // Step 5: Build an AI Agent with SmartWebFetchTool tool
-    var agent = ChatClient.builder(chatModel)
-        .defaultTools(webFetchTool)
-        .build();
-
-    // Step 6: Ask the AI to fetch and extract information from Wikipedia
-    var wikipediaUrl = "https://en.wikipedia.org/wiki/Dungeons_%26_Dragons";
-    log.info("Asking AI agent to fetch content from: {}", wikipediaUrl);
-
-    var userMessage = """
-        Fetch the content from %s and tell me the name of the designers of Dungeons and Dragons.
-        """.formatted(wikipediaUrl);
-
     try {
+        // Step 5: Ask the AI to fetch and extract information from Wikipedia
         var response = agent.prompt()
-            .user(userMessage)
+            .user("Using the website https://en.wikipedia.org/wiki/Dungeons_%26_Dragons tell me the name of the designers of Dungeons and Dragons.")
+            .tools(webFetchTool)
             .call()
             .content();
 
@@ -61,7 +62,7 @@ void main() {
         log.info(response);
     } catch (Exception e) {
         log.error("Error invoking AI agent: {}", e.getMessage());
+    } finally {
+        log.info("\n=== Ending Dungeon Master AI Agent with Built-in Tools ===");
     }
-
-    log.info("\n=== Ending AI Agent with Built-in Tools ===");
 }

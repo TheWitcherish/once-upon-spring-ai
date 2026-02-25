@@ -90,3 +90,5 @@ surefire-reports/
 *.tmp
 *.temp
 *.bak
+*.pdf
+chapter5/utils/dm_knowledge_base.json
