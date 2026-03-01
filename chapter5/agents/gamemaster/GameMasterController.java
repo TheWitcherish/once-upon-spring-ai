@@ -39,16 +39,16 @@ class GameMasterController {
     private static final Logger log = LoggerFactory.getLogger("GameMasterController");
 
     private final ChatClient chatClient;
-    private final RemoteAgentConnections remoteAgentConnections;
+    private final GameMasterService remoteAgent;
     private final ToolCallback[] mcpTools;
     private final ObjectMapper mapper = new ObjectMapper();
     private final List<Map<String, String>> conversationHistory =
             Collections.synchronizedList(new ArrayList<>());
 
-    GameMasterController(ChatClient chatClient, RemoteAgentConnections remoteAgentConnections,
+    GameMasterController(ChatClient chatClient, GameMasterService remoteAgent,
                          ToolCallback[] mcpTools) {
         this.chatClient = chatClient;
-        this.remoteAgentConnections = remoteAgentConnections;
+        this.remoteAgent = remoteAgent;
         this.mcpTools = mcpTools;
     }
 
@@ -88,7 +88,7 @@ class GameMasterController {
         try {
             var content = chatClient.prompt()
                     .user(request.question())
-                    .tools(remoteAgentConnections)
+                    .tools(remoteAgent)
                     .toolCallbacks(mcpTools)
                     .call()
                     .content();

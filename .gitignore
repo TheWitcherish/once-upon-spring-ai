@@ -24,7 +24,6 @@ CLAUDE.md
 .claudeignore
 .mcp.json
 .mcp/
-.vscode/
 .kiro/
 .cursor/
 .windsurf/

@@ -56,7 +56,10 @@ public class GameMasterOrchestrator {
     private static final Logger log = LoggerFactory.getLogger(GameMasterOrchestrator.class);
 
     private static final String SYSTEM_PROMPT = """
-        You are a D&D Game Master orchestrator with access to specialized agents and tools.
+        You are the Grand Game Master — the supreme narrator of D&D adventures.
+        You have specialized agents and tools at your disposal to gather information,
+        but YOUR voice is what the player hears. You MUST synthesize all agent and tool
+        results into your own dramatic, immersive Game Master narrative.
 
         Available agents (use sendMessage to communicate with them):
         %s
@@ -66,22 +69,21 @@ public class GameMasterOrchestrator {
         2. Use rollDice for dice rolling (via MCP)
 
         Available D&D dice types:
-        - d4 (4-sided die) — Used for damage rolls of small weapons like daggers
-        - d6 (6-sided die) — Used for damage rolls of weapons like shortswords, spell damage
-        - d8 (8-sided die) — Used for damage rolls of weapons like longswords, rapiers
-        - d10 (10-sided die) — Used for damage rolls of heavy weapons, percentile rolls
-        - d12 (12-sided die) — Used for damage rolls of great weapons like greataxes
-        - d20 (20-sided die) — Used for ability checks, attack rolls, saving throws
-        - d100 (percentile die) — Used for random tables, wild magic surges
+        - d4, d6, d8, d10, d12, d20, d100
 
-        IMPORTANT: Always use the sendMessage tool with the exact agent name. Never invent or guess URLs.
-
-        Be creative, engaging, and use your available tools to enhance the D&D experience.
+        CRITICAL RULES FOR YOUR RESPONSES:
+        - Tool and agent results are RAW DATA for you to work with — NEVER pass them through verbatim.
+        - ALWAYS rewrite and enrich agent responses in your own Game Master voice with dramatic flair.
+        - When the Rules Agent provides a rule, explain it in your narrative style with examples.
+        - When the Character Agent creates or finds a character, announce it dramatically.
+        - When dice are rolled, narrate the tension and outcome theatrically.
+        - Combine results from multiple agents/tools into a single cohesive narrative.
+        - Always use the sendMessage tool with the exact agent name. Never invent or guess URLs.
 
         When responding, always structure your output as JSON with these fields:
-        - "response": Your narrative response as Game Master
+        - "response": Your synthesized narrative response as Game Master (MUST be in your own words, not a copy of agent output)
         - "actionsSuggestions": A list of 3 suggested actions for the player
-        - "details": Brief summary of tools/agents used
+        - "details": Brief summary of which tools/agents were consulted
         - "diceRolls": A list of dice rolls, each with "diceType", "result", and "reason"
         """;
 
@@ -94,11 +96,11 @@ public class GameMasterOrchestrator {
 
     @Bean
     ChatClient chatClient(BedrockProxyChatModel chatModel,
-                           RemoteAgentConnections remoteAgentConnections) {
+                           GameMasterService remoteAgent) {
 
-        String systemPrompt = SYSTEM_PROMPT.formatted(remoteAgentConnections.getAgentDescriptions());
+        String systemPrompt = SYSTEM_PROMPT.formatted(remoteAgent.getAgentDescriptions());
 
-        log.info("Initializing routing ChatClient with agents: {}", remoteAgentConnections.getAgentNames());
+        log.info("Initializing routing ChatClient with agents: {}", remoteAgent.getAgentNames());
 
         return ChatClient.builder(chatModel)
                 .defaultSystem(systemPrompt)

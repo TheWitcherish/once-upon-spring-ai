@@ -62,7 +62,7 @@ class CharacterStore {
 }
 
 /// Character management tools — exposed to the A2A AgentExecutor via Spring AI @Tool.
-/// Equivalent to the Python @tool-decorated functions in character_agent.py.
+/// Exposed to the A2A AgentExecutor via Spring AI @Tool annotations.
 @Service
 class CharacterTools {
 

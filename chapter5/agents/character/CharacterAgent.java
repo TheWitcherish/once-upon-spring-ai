@@ -41,7 +41,7 @@ import java.util.List;
 import java.util.Map;
 
 /// Character Agent — D&D character management via A2A protocol.
-/// Equivalent to the Python character_agent.py using Strands A2AServer.
+/// Uses Spring AI A2A server autoconfiguration for agent discovery and communication.
 /// Run with: jbang CharacterAgent.java
 @SpringBootApplication
 public class CharacterAgent {

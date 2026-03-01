@@ -27,7 +27,7 @@ import java.time.Duration;
 import java.util.List;
 
 /// Creates a D&D rules knowledge base from the Basic Rules PDF.
-/// Equivalent to Python's create_knowledge_base.py using ChromaDB.
+/// Uses Spring AI's PagePdfDocumentReader and SimpleVectorStore with Bedrock Titan Embeddings.
 ///
 /// Prerequisites:
 ///   1. Download "DnD_BasicRules_2018.pdf" and place it in this directory
@@ -65,12 +65,12 @@ void main() {
     List<Document> pages = pdfReader.get();
     log.info("Extracted {} pages from PDF", pages.size());
 
-    // Step 4: Split into smaller chunks — equivalent to Python's paragraph splitting
+    // Step 4: Split into smaller chunks for better retrieval
     log.info("Splitting into chunks...");
     var splitter = new TokenTextSplitter();
     List<Document> chunks = splitter.apply(pages);
 
-    // Filter out very short chunks (< 50 chars) — same as Python version
+    // Filter out very short chunks (< 50 chars)
     chunks = chunks.stream()
             .filter(doc -> doc.getText().length() >= 50)
             .toList();
@@ -80,7 +80,7 @@ void main() {
     log.info("Creating vector store and computing embeddings (this may take a while)...");
     var vectorStore = SimpleVectorStore.builder(embeddingModel).build();
 
-    // Add in batches of 100 — same as Python version
+    // Add in batches of 100 for efficient processing
     int batchSize = 100;
     for (int i = 0; i < chunks.size(); i += batchSize) {
         int end = Math.min(i + batchSize, chunks.size());

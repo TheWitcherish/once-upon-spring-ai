@@ -34,13 +34,13 @@ import org.springframework.stereotype.Service;
 /// Manages connections to remote A2A agents (Rules Agent, Character Agent).
 /// Resolves agent cards at startup and provides a sendMessage tool for the ChatClient.
 @Service
-class RemoteAgentConnections {
+class GameMasterService {
 
-    private static final Logger log = LoggerFactory.getLogger(RemoteAgentConnections.class);
+    private static final Logger log = LoggerFactory.getLogger(GameMasterService.class);
 
     private final Map<String, AgentCard> cards = new HashMap<>();
 
-    RemoteAgentConnections(@Value("${remote.agents.urls}") List<String> agentUrls) {
+    GameMasterService(@Value("${remote.agents.urls}") List<String> agentUrls) {
         for (String url : agentUrls) {
             try {
                 log.info("Resolving agent card from: {}", url);
@@ -117,7 +117,7 @@ class RemoteAgentConnections {
 
             String result = responseFuture.get(60, TimeUnit.SECONDS);
             log.info("Agent '{}' response: {}", agentName, result);
-            return result;
+            return "[Raw data from %s — rewrite in your own Game Master voice]: %s".formatted(agentName, result);
         } catch (Exception e) {
             log.error("Error sending message to agent '{}': {}", agentName, e.getMessage());
             return "Error communicating with agent '%s': %s".formatted(agentName, e.getMessage());
