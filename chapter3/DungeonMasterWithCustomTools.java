@@ -61,7 +61,6 @@ void main() {
             .user(playerMessage)
             // TODO 4: Pass the DiceTools to the agent so it can roll dice.
             //   Create a new DiceTools instance and register it using .tools()
-            //   Hint: .tools(new DiceTools())
             //
             //   Without this, the AI will try to "imagine" dice rolls instead of actually rolling them!
             .call()

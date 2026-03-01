@@ -69,7 +69,6 @@ public class RulesAgent {
         //     - "server.servlet.context-path"  → "/a2a"     (A2A endpoints live under /a2a)
         //     - "spring.application.name"      → "rules-agent"
         //     - "spring.ai.a2a.server.enabled" → "true"     (activates A2A auto-configuration)
-        //   Hint: System.setProperty("server.port", "8000");
 
         SpringApplication.run(RulesAgent.class, args);
     }

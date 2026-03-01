@@ -103,7 +103,6 @@ void main() {
                 var response = agent.prompt()
                         .user(userInput)
                         // TODO 4: Pass the MCP tools to the agent so it can call the remote dice server.
-                        //   Hint: .toolCallbacks(mcpTools)
                         //   Note: We use .toolCallbacks() (not .tools()) because MCP tools are already
                         //   wrapped as ToolCallback objects by SyncMcpToolCallbackProvider.
                         .call()

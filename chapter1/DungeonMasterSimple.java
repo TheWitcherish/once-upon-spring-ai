@@ -8,7 +8,6 @@
 //DEPS software.amazon.awssdk:auth:2.41.34
 //DEPS org.slf4j:slf4j-api:2.0.17
 // TODO 1: Add the SLF4J simple logging dependency so you can see what the agent is thinking
-//   Hint: The artifact is org.slf4j:slf4j-simple:2.0.17
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

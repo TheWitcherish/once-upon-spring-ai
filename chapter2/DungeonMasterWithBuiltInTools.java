@@ -5,7 +5,6 @@
 //DEPS org.springframework.ai:spring-ai-bedrock-converse:2.0.0-M2
 //DEPS org.springframework.ai:spring-ai-client-chat:2.0.0-M2
 // TODO 1: Add the Spring AI Community agent-utils dependency that provides SmartWebFetchTool.
-//   Hint: The artifact is org.springaicommunity:spring-ai-agent-utils:0.4.2
 //DEPS software.amazon.awssdk:bedrockruntime:2.41.34
 //DEPS software.amazon.awssdk:auth:2.41.34
 //DEPS org.slf4j:slf4j-api:2.0.17
@@ -21,7 +20,6 @@ import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.bedrockruntime.BedrockRuntimeClient;
 
 // TODO 2: Import the SmartWebFetchTool class from the community library.
-//   Hint: import org.springaicommunity.agent.tools.SmartWebFetchTool;
 
 private static final Logger log = LoggerFactory.getLogger("DungeonMasterWithBuiltInTools");
 

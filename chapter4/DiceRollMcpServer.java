@@ -17,8 +17,6 @@ import org.springframework.stereotype.Component;
 
 // TODO 1: Import the MCP annotation classes that will expose your tools over the network.
 //   These are the MCP equivalents of @Tool and @ToolParam from Chapter 3.
-//   Hint: import org.springaicommunity.mcp.annotation.McpTool;
-//         import org.springaicommunity.mcp.annotation.McpToolParam;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -45,11 +43,8 @@ class DiceTools {
 
     // TODO 2: Annotate this method with @McpTool to expose it as a network-accessible MCP tool.
     //   This is similar to @Tool from Chapter 3, but the tool will be available over HTTP.
-    //   Hint: @McpTool(description = "Roll dice for D&D game mechanics. Use this for attack rolls, damage, ability checks, or saving throws.")
 
     // TODO 3: Annotate each parameter with @McpToolParam to describe them for MCP clients.
-    //   Hint: @McpToolParam(description = "Number of faces on the dice (e.g. 6, 20)", required = true) int faces,
-    //         @McpToolParam(description = "Number of dice to roll (e.g. 1, 3)", required = true) int count
     DiceRollResponse rollDice(int faces, int count) {
 
         var rolls = new int[count];

@@ -92,7 +92,6 @@ public class GameMasterOrchestrator {
         System.setProperty("spring.application.name", "gamemaster-orchestrator");
         // TODO 1: Set the remote.agents.urls property with the A2A agent URLs.
         //   The orchestrator needs to know where the Rules Agent and Character Agent are running.
-        //   Hint: System.setProperty("remote.agents.urls", "http://localhost:8000/a2a/,http://localhost:8001/a2a/");
         //   At startup, GameMasterService will fetch each agent's
         //   card from /.well-known/agent-card.json and register them by name.
 

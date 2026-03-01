@@ -7,8 +7,6 @@ import org.slf4j.LoggerFactory;
 
 // TODO 1: Import the @Tool and @ToolParam annotations from Spring AI.
 //   These annotations tell the AI model what your method does and what each parameter means.
-//   Hint: import org.springframework.ai.tool.annotation.Tool;
-//         import org.springframework.ai.tool.annotation.ToolParam;
 
 import java.util.Arrays;
 import java.util.Random;
