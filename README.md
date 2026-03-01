@@ -124,10 +124,9 @@ Ensure you have enabled the following models in your AWS Bedrock console (`eu-ce
 ## Resources
 
 - [Spring AI Documentation](https://docs.spring.io/spring-ai/reference/)
-- [JBang Documentation](https://www.jbang.dev/documentation/guide/latest/)
+- [JBang Documentation](https://www.jbang.dev/documentation/jbang-all/latest/index.html)
 - [AWS Bedrock Documentation](https://docs.aws.amazon.com/bedrock/)
-- [Anthropic Claude Documentation](https://docs.anthropic.com/)
-- [A2A Protocol](https://google.github.io/A2A/)
+- [A2A Protocol](https://a2a-protocol.org/latest/)
 - [Model Context Protocol](https://modelcontextprotocol.io/)
 
 ### The Adventure Never Ends...
