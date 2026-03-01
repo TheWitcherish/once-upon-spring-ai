@@ -1,5 +1,7 @@
 # Once Upon Spring AI: A Developer's Epic Journey into Agentic Java
 
+![Header Image](images/header.jpeg)
+
 _"Roll for Initiative... in Java!"_
 
 Welcome, brave adventurer, to the ultimate Spring AI quest! This comprehensive workshop will transform you from a coding apprentice into a master of AI agent orchestration. Through five epic chapters, you'll learn to create, equip, and command digital companions that can think, act, and collaborate like a legendary adventuring party.
