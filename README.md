@@ -1,6 +1,6 @@
 # Once Upon Spring AI: A Developer's Epic Journey into Agentic Java
 
-![Header Image](images/header.jpeg)
+![Header Image](images/home.png)
 
 _"Roll for Initiative... in Java!"_
 
