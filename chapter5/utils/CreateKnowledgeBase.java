@@ -31,7 +31,7 @@ import java.util.List;
 ///
 /// Prerequisites:
 ///   1. Download "DnD_BasicRules_2018.pdf" and place it in this directory
-///   2. AWS credentials configured with Bedrock access in eu-central-1
+///   2. AWS credentials configured with Bedrock access in us-west-2
 ///
 /// Usage: jbang CreateKnowledgeBase.java
 ///
@@ -55,7 +55,7 @@ void main() {
     log.info("Initializing Bedrock Titan Embedding Model...");
     var titanApi = new TitanEmbeddingBedrockApi(
             "amazon.titan-embed-text-v2:0",
-            "eu-central-1",
+            "us-west-2",
             Duration.ofSeconds(60));
     var embeddingModel = new BedrockTitanEmbeddingModel(titanApi, ObservationRegistry.NOOP);
 

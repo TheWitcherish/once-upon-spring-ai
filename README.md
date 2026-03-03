@@ -12,8 +12,7 @@ Welcome, brave adventurer, to the ultimate Spring AI quest! This comprehensive w
 - **JBang** - Zero-setup build tool — runs `.java` files directly with embedded `//DEPS` metadata
 - **Spring AI 2.0** - Spring's AI/ML integration framework
 - **Spring Boot 4.x** - For MCP Server and A2A agent services (Chapters 4-5)
-- **AWS Bedrock** - Cloud-based AI model hosting
-- **Claude Haiku 4.5** (Anthropic) - AI model via Bedrock
+- **Amazon Bedrock** - Cloud-based AI model hosting (use any model available in your account)
 
 ## The Complete Adventure Map
 
@@ -23,7 +22,7 @@ Your journey through the realms of AI agents is carefully structured as a progre
 **Master the fundamental ritual of agent creation**
 - Learn what Spring AI is and how it works
 - Summon your first AI companion — a Dungeon Master chatbot
-- Configure AWS Bedrock models and system prompts
+- Configure Amazon Bedrock models and system prompts
 - Understand the core concepts of agent development
 
 ### [Chapter 2: AI Agent with Built-in Tools](chapter2/)
@@ -68,16 +67,13 @@ Your journey through the realms of AI agents is carefully structured as a progre
    jbang --version
    ```
 
-3. **AWS credentials** configured with Bedrock access
-   ```bash
-   aws configure
-   ```
-   Or set environment variables:
+3. **AWS credentials** configured with **permissions to Amazon Bedrock**
    ```bash
    export AWS_ACCESS_KEY_ID=your-access-key
    export AWS_SECRET_ACCESS_KEY=your-secret-key
-   export AWS_REGION=eu-central-1
+   export AWS_REGION=us-west-2
    ```
+   You can use any model available in your Amazon Bedrock account — just update the model ID in each chapter's source file.
 
 ### Run Your First Chapter
 
@@ -114,18 +110,20 @@ once-upon-spring-ai/
         └── CreateKnowledgeBase.java   # PDF to vector store ingestion
 ```
 
-## AWS Bedrock Models
+## Amazon Bedrock Models
 
-Ensure you have enabled the following models in your AWS Bedrock console (`eu-central-1`):
+You can use any model available in your Amazon Bedrock console — simply update the model ID in each chapter's source file to match your preferred model.
 
-- **Claude Haiku 4.5** (`eu.anthropic.claude-haiku-4-5-20251001-v1:0`) — All chapters
+The workshop examples default to:
+
+- **Anthropic Claude** (via Bedrock) — All chapters
 - **Amazon Titan Embed Text V2** — Chapter 5 (vector store embeddings)
 
 ## Resources
 
 - [Spring AI Documentation](https://docs.spring.io/spring-ai/reference/)
 - [JBang Documentation](https://www.jbang.dev/documentation/jbang-all/latest/index.html)
-- [AWS Bedrock Documentation](https://docs.aws.amazon.com/bedrock/)
+- [Amazon Bedrock Documentation](https://docs.aws.amazon.com/bedrock/)
 - [A2A Protocol](https://a2a-protocol.org/latest/)
 - [Model Context Protocol](https://modelcontextprotocol.io/)
 

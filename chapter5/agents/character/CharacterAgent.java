@@ -128,12 +128,12 @@ class CharacterAgentConfig {
     @Bean
     BedrockProxyChatModel chatModel() {
         var bedrockClient = BedrockRuntimeClient.builder()
-                .region(Region.EU_CENTRAL_1)
+                .region(Region.US_WEST_2)
                 .credentialsProvider(DefaultCredentialsProvider.builder().build())
                 .build();
 
         var options = BedrockChatOptions.builder()
-                .model("eu.anthropic.claude-haiku-4-5-20251001-v1:0")
+                .model("global.anthropic.claude-haiku-4-5-20251001-v1:0")
                 .build();
 
         return BedrockProxyChatModel.builder()
