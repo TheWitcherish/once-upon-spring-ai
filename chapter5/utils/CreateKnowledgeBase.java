@@ -55,7 +55,7 @@ void main() {
     log.info("Initializing Bedrock Titan Embedding Model...");
     var titanApi = new TitanEmbeddingBedrockApi(
             "amazon.titan-embed-text-v2:0",
-            "eu-central-1",
+            "us-west-2",
             Duration.ofSeconds(60));
     var embeddingModel = new BedrockTitanEmbeddingModel(titanApi, ObservationRegistry.NOOP);
 

@@ -56,11 +56,11 @@ void main() {
 
         // Step 4: Create AWS Bedrock ChatModel
         var bedrockClient = BedrockRuntimeClient.builder()
-                .region(Region.EU_CENTRAL_1)
+                .region(Region.US_WEST_2)
                 .credentialsProvider(DefaultCredentialsProvider.builder().build())
                 .build();
 
-        var modelId = "eu.anthropic.claude-haiku-4-5-20251001-v1:0";
+        var modelId = "global.anthropic.claude-haiku-4-5-20251001-v1:0";
         var options = BedrockChatOptions.builder()
                 .model(modelId)
                 .build();
